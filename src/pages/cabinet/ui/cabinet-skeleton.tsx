@@ -1,5 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/src/shared/ui/card";
-import { ProfileSkeleton } from "@/src/shared/ui/skeletons";
+import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui/card";
+import { ProfileSkeleton } from "@/shared/ui/skeletons";
 
 export default function CabinetSkeleton() {
     return (

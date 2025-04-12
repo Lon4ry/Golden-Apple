@@ -1,11 +1,11 @@
 import {
-    mysqlTable,
-    varchar,
     int,
-    timestamp,
+    json,
     mysqlEnum,
+    mysqlTable,
+    timestamp,
+    varchar,
 } from "drizzle-orm/mysql-core";
-import { relations } from "drizzle-orm";
 
 export const users = mysqlTable("Users", {
     id: varchar("id", { length: 255 }).primaryKey().notNull(),
@@ -15,6 +15,7 @@ export const users = mysqlTable("Users", {
     address: varchar("address", { length: 255 }),
     phone: varchar("phone", { length: 20 }).default(""),
     password: varchar("password", { length: 255 }).notNull(),
+    favorites: json("favorites").default("[]"),
     role: mysqlEnum("role", [
         "CLIENT",
         "SALES_MANAGER",
@@ -65,44 +66,6 @@ export const cartItems = mysqlTable("CartItems", {
     quantity: int("quantity").notNull(),
 });
 // Relations
-export const usersRelations = relations(users, ({ many }) => ({
-    orders: many(orders),
-}));
-
-export const ordersRelations = relations(orders, ({ one }) => ({
-    user: one(users, {
-        fields: [orders.userId],
-        references: [users.id],
-    }),
-}));
-export const cartsRelations = relations(carts, ({ one, many }) => ({
-    user: one(users, {
-        fields: [carts.userId],
-        references: [users.id],
-    }),
-    items: many(cartItems),
-}));
-
-export const cartItemsRelations = relations(cartItems, ({ one }) => ({
-    cart: one(carts, {
-        fields: [cartItems.cartId],
-        references: [carts.id],
-    }),
-    product: one(products, {
-        fields: [cartItems.productId],
-        references: [products.id],
-    }),
-}));
-export const orderItemsRelations = relations(orderItems, ({ one }) => ({
-    order: one(orders, {
-        fields: [orderItems.orderId],
-        references: [orders.id],
-    }),
-    product: one(products, {
-        fields: [orderItems.productId],
-        references: [products.id],
-    }),
-}));
 
 // Types
 export type User = typeof users.$inferSelect;

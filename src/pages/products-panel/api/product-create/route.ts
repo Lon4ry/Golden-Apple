@@ -1,7 +1,7 @@
 "use server";
 import { NextResponse } from "next/server";
-import { db } from "@/src/db";
-import { products } from "@/src/db/schema";
+import { db } from "@/db";
+import { products } from "@/db/schema";
 
 export async function POST(request: Request) {
     const [productId, product, image] = await request.json();

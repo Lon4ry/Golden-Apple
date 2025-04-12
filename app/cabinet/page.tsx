@@ -1,1 +1,1 @@
-export { CabinetPage as default } from "@/pages/cabinet";
+export { ProfilePage as default } from "@/pages/cabinet";

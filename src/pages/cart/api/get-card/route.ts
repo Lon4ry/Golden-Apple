@@ -1,6 +1,6 @@
 "use server";
-import { db } from "@/src/db";
-import { cartItems, carts, products } from "@/src/db/schema";
+import { db } from "@/db";
+import { cartItems, carts, products } from "@/db/schema";
 import { eq, inArray } from "drizzle-orm";
 import { NextResponse } from "next/server";
 

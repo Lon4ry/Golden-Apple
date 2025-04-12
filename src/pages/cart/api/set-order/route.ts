@@ -1,16 +1,10 @@
 "use server";
 import { NextResponse } from "next/server";
-import { db } from "@/src/db";
+import { db } from "@/db";
 import { eq, inArray } from "drizzle-orm";
-import {
-    cartItems,
-    orderItems,
-    orders,
-    products,
-    users,
-} from "@/src/db/schema";
+import { cartItems, orderItems, orders, products, users } from "@/db/schema";
 import { v4 as uuidv4 } from "uuid";
-import { sendSalesMessageTelegram } from "@/src/shared/api/telegram/telegram-sales";
+import { sendSalesMessageTelegram } from "@/shared/api/telegram/telegram-sales";
 
 export async function POST(request: Request) {
     const [userId, cartProductsId, cartItemsId] = await request.json();

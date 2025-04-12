@@ -1,1 +1,1 @@
-export { ProductsPage as default } from "@/pages/products-panel";
+export { ProductsAdminPage as default } from "@/pages/products-panel";

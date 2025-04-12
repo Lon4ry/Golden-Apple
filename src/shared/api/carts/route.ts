@@ -1,14 +1,14 @@
 "use server";
 import { NextResponse } from "next/server";
-import { db } from "@/src/db";
+import { db } from "@/db";
 import { and, eq } from "drizzle-orm";
-import { cartItems, carts } from "@/src/db/schema";
+import { cartItems, carts } from "@/db/schema";
 import { v4 as uuidv4 } from "uuid";
 
 export async function POST(request: Request) {
     const [userId, product] = await request.json();
 
-    let cart = await db
+    let [cart] = await db
         .select({ id: carts.id })
         .from(carts)
         .where(eq(userId, carts.userId));
@@ -17,7 +17,7 @@ export async function POST(request: Request) {
         .from(cartItems)
         .where(
             and(
-                eq(cart[0].id, cartItems.cartId),
+                eq(cart.id, cartItems.cartId),
                 eq(cartItems.productId, product.id),
             ),
         );
@@ -27,14 +27,14 @@ export async function POST(request: Request) {
             .set({ quantity: productExists[0].quantity + 1 })
             .where(
                 and(
-                    eq(cart[0].id, cartItems.cartId),
+                    eq(cart.id, cartItems.cartId),
                     eq(cartItems.productId, product.id),
                 ),
             );
     } else {
         await db.insert(cartItems).values({
             id: uuidv4(),
-            cartId: cart[0].id,
+            cartId: cart.id,
             productId: product.id,
             quantity: 1,
         });

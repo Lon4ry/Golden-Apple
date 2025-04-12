@@ -71,7 +71,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                 body: JSON.stringify({ name, email, password }),
             });
 
-            return response.ok;
+            if (response.ok) {
+                return true;
+            }
+            return false;
         } catch (error) {
             console.error("Registration error:", error);
             return false;

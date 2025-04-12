@@ -1,6 +1,6 @@
 "use server";
-import { db } from "@/src/db";
-import { orders, users } from "@/src/db/schema";
+import { db } from "@/db";
+import { orders, users } from "@/db/schema";
 import { inArray } from "drizzle-orm";
 import { NextResponse } from "next/server";
 

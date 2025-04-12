@@ -1,8 +1,8 @@
 "use server";
-import { orders, users } from "@/src/db/schema";
-import { db } from "@/src/db";
+import { orders, users } from "@/db/schema";
+import { db } from "@/db";
 import { eq } from "drizzle-orm";
-import { sendSalesMessageTelegram } from "@/src/shared/api/telegram/telegram-sales";
+import { sendSalesMessageTelegram } from "@/shared/api/telegram/telegram-sales";
 
 export async function approveDeliver(orderId: string): Promise<void> {
     await db

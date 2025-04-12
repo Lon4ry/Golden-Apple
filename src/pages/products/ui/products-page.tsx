@@ -19,7 +19,7 @@ import {
 import { ProductCard } from "@/entities/product";
 import type { Product } from "@/db/schema";
 
-export default function ProductsPage() {
+export function ProductsPage() {
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
     const [sortBy, setSortBy] = useState("name");
@@ -27,7 +27,7 @@ export default function ProductsPage() {
 
     useEffect(() => {
         async function fetchProducts() {
-            const response = await fetch("/api/products");
+            const response = await fetch("/api/products/get-all");
             const data = await response.json();
             setProducts(data);
         }

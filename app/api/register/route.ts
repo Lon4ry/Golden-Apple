@@ -1,1 +1,1 @@
-export { POST } from "@/pages/register";
+export { POST } from "@/widgets/header/api/register";

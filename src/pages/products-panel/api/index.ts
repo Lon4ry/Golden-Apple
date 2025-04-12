@@ -1,1 +1,1 @@
-export * from "./route";
+export * from "./product-get-all/route";

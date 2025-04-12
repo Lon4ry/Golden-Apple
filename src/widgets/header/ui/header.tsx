@@ -3,29 +3,29 @@
 import Link from "next/link";
 import { useAuth } from "@/app/layouts/auth-context";
 
-export function Header() {
-    const { user, logout } = useAuth();
+import { Heart, LogOut, UserRound } from "lucide-react";
+import { AuthWidget, CartWidget } from "@/widgets/header/ui/";
 
+export function Header(variant: { variant?: string }) {
+    const { user, logout } = useAuth();
+    console.log(user);
     return (
-        <header className="bg-white shadow">
-            <nav className="container mx-auto flex items-center justify-between px-4 py-4">
-                <Link href="/" className="text-2xl font-bold">
-                    ElectroTools
+        <header
+            className={
+                variant.variant == "home"
+                    ? "relative z-50 border-b-1 bg-transparent duration-700 hover:bg-white"
+                    : "bg-white shadow"
+            }
+        >
+            <nav className="container mx-auto flex items-center justify-between px-4 py-2 pt-4">
+                <Link href="/" className="text-3xl font-bold">
+                    Golden Apple
                 </Link>
-                <div className="space-x-4">
-                    <Link
-                        href="/products"
-                        className="text-lg text-black hover:text-gray-600"
-                    >
-                        Продукты
-                    </Link>
+                <div className="flex items-center space-x-12">
                     {user ? (
                         <>
-                            <Link
-                                href="/cabinet"
-                                className="text-lg text-black hover:text-gray-600"
-                            >
-                                Профиль
+                            <Link href="/cabinet">
+                                <UserRound className="h-8 w-8 cursor-pointer" />
                             </Link>
                             {user.role === "CEO" ||
                             user.role === "SALES_MANAGER" ? (
@@ -45,13 +45,10 @@ export function Header() {
                                 </Link>
                             ) : (
                                 <>
-                                    {" "}
-                                    <Link
-                                        href="/cart"
-                                        className="text-lg text-black hover:text-gray-600"
-                                    >
-                                        Корзина
+                                    <Link href="/cabinet">
+                                        <Heart className="h-8 w-8 cursor-pointer" />
                                     </Link>
+                                    <CartWidget authorize={true} />
                                     <Link
                                         href="/support"
                                         className="text-lg text-black hover:text-gray-600"
@@ -60,30 +57,41 @@ export function Header() {
                                     </Link>
                                 </>
                             )}
-                            <button
+                            <LogOut
                                 onClick={logout}
-                                className="text-lg text-black hover:text-gray-600"
-                            >
-                                Выйти
-                            </button>
+                                className="h-8 w-8 cursor-pointer"
+                            />
                         </>
                     ) : (
                         <>
-                            <Link
-                                href="/login"
-                                className="text-lg text-black hover:text-gray-600"
-                            >
-                                Войти
+                            <Link href="/cabinet/favorites">
+                                <Heart className="h-8 w-8 cursor-pointer" />
                             </Link>
-                            <Link
-                                href="/register"
-                                className="text-lg text-black hover:text-gray-600"
-                            >
-                                Зарегистрироваться
-                            </Link>
+                            <CartWidget authorize={false} />
+                            <AuthWidget />
                         </>
                     )}
                 </div>
+            </nav>
+            <nav className="center container mx-auto flex items-center justify-center space-x-4 px-4 py-2 pb-4">
+                <Link
+                    href="/products"
+                    className="text-lg text-black hover:text-gray-600"
+                >
+                    Женское
+                </Link>
+                <Link
+                    href="/products"
+                    className="text-lg text-black hover:text-gray-600"
+                >
+                    Мужское
+                </Link>{" "}
+                <Link
+                    href="/products"
+                    className="text-lg text-black hover:text-gray-600"
+                >
+                    Духи
+                </Link>
             </nav>
         </header>
     );
